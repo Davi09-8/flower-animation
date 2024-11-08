@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+        }
+        #canvas-container {
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <script>
+        let h = 0; // Warna awal dalam hue
+        let n = 36; // Jumlah kelopak bunga
+
+        function setup() {
+            let canvas = createCanvas(600, 600);
+            canvas.parent('canvas-container');
+            colorMode(HSB, 1, 1, 1); // Mode warna HSB agar sesuai dengan Python's colorsys
+            angleMode(DEGREES); // Mode sudut dalam derajat seperti di Turtle
+            background(0); // Latar belakang hitam
+            noFill();
+            strokeWeight(2);
+        }
+
+        function draw() {
+            translate(width / 2, height / 2); // Pindah ke tengah canvas
+            let c = color(h, 1, 1); // Warna HSB yang berubah
+            stroke(c);
+
+            // Menggambar kelopak bunga seperti lingkaran
+            beginShape();
+            for (let i = 0; i < 360; i++) {
+                let radius = 180 - (i % 180); // Radius berubah sesuai i, mirip dengan Python Turtle
+                let x = cos(i) * radius;
+                let y = sin(i) * radius;
+                vertex(x, y);
+            }
+            endShape(CLOSE);
+
+            // Memutar warna
+            h += 1 / n;
+            if (h > 1) {
+                h = 0; // Reset hue ketika mencapai batas
+            }
+
+            // Menambahkan sedikit rotasi untuk animasi kelopak bunga
+            rotate(1); // Rotasi dalam derajat untuk memberikan efek animasi berputar
+        }
+    </script>
+</body>
+</html>
